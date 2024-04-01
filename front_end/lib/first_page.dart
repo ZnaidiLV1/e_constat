@@ -30,13 +30,13 @@ class _first_pageState extends State<first_page> {
                 margin: EdgeInsets.only(top: screenheight * 0.1),
                 height: screenWidth * 0.14,
                 width: screenWidth * 0.6,
-                decoration: BoxDecoration(
+                decoration:const  BoxDecoration(
                   color: Color(0xFF193A59),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: MaterialButton(
                   onPressed: () {},
-                  child: Text(
+                  child:const  Text(
                     "CREATE CONSTAT",
                     style: TextStyle(
                         fontSize: 25,
@@ -49,19 +49,19 @@ class _first_pageState extends State<first_page> {
                 margin: EdgeInsets.only(top: screenheight * 0.02),
                 height: screenWidth * 0.14,
                 width: screenWidth * 0.6,
-                decoration: BoxDecoration(
+                decoration:const  BoxDecoration(
                   color: Color(0xFF193A59),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: MaterialButton(
                   onPressed: () {},
-                  child: Text(
+                  child:const  Text(
                     "LOG IN",
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
-                  ).animate().fade(delay: Duration(seconds: 2)).slideY(),
+                  ).animate().fade(delay:const  Duration(seconds: 2)).slideY(),
                 ),
               ),
               
