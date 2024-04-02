@@ -6,6 +6,7 @@ import 'package:e_constat/constat/OneUser/StepTwo.dart';
 import 'package:e_constat/constat/TwoUser/StepOneTwoUser.dart';
 
 import 'package:e_constat/constat/TwoUser/StepTwo2User.dart';
+import 'package:e_constat/first_page.dart';
 import 'package:e_constat/firstpage.dart';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const FirstPage(),
+        "/": (context) => const first_page(),
         "connexion": (context) => const Connexion(),
         "profil": (context) => const MonProfil(),
         "Accueil": (context) => const Accueil(),
