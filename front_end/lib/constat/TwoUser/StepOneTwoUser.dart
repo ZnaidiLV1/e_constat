@@ -1,4 +1,4 @@
-import 'package:e_constat/constat/Screens/CustomCard.dart';
+import 'package:front_end1/constat/Screens/CustomCard.dart';
 
 import 'package:flutter/material.dart';
 
@@ -46,9 +46,6 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
             titleCard: "A",
             color: const Color(0xff125d84),
             btn1: "Renseigner\n les informations du conducteur A",
-            btn2: "Renseigner\n les informations du véhicule A",
-            typeConducteur: "Conducteur A",
-            typeVehicule: "Véhicule A",
           ),
           const SizedBox(
             height: 20,
@@ -57,9 +54,6 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
             titleCard: "B",
             color: const Color(0xfff6b042),
             btn1: "Renseigner\n les informations du conducteur B",
-            btn2: "Renseigner\n les informations du véhicule B",
-            typeConducteur: "Conducteur B",
-            typeVehicule: "Véhicule B",
           ),
           const SizedBox(
             height: 20,

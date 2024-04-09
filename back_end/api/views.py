@@ -1,5 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from . import serializers
 from . import models
 from .serializers import UserCreateSerializer
@@ -32,11 +34,14 @@ def create_assure(request):
     data = request.data
     n_tlfn = int(data['numr_tlfn'])
     n_permis = int(data['num_permis'])
+    n_tlfn2=int(data['numr_tlfn_autre_assure'])
     assure = models.Assure.objects.create(
         first_name=data['first_name'],
         last_name=data['last_name'],
+        email_user=data['email_user'],
         numr_tlfn=n_tlfn,
         num_permis=n_permis,
+        numr_tlfn_autre_assure=n_tlfn2
     )
     serializer = serializers.assureSerializer(assure, many=False)
 
@@ -48,6 +53,7 @@ def get_assure(request):
     assure = models.Assure.objects.all()
     serializer = serializers.assureSerializer(assure, many=True)
     return Response(serializer.data)
+
 
 
 @api_view(['POST'])
@@ -85,9 +91,14 @@ def create_constat(request, id_assure):
     serializer = serializers.constatSerializer(constat, many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_constat(request,id_con):
+    constat=models.Constat.objects.get(id_constat=id_con)
+    serializer=serializers.constatSerializer(constat,many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
-def get_constat(request, id_assure):
+def get_constats(request, id_assure):
     constats = models.Constat.objects.filter(assure=id_assure)
     serializer = serializers.constatSerializer(constats, many=True)
     return Response(serializer.data)
@@ -97,18 +108,16 @@ def get_constat(request, id_assure):
 def create_voiture(request, id_constat):
     data = request.data
     imm = int(data["immatriculation"])
-    cg = int(data["carte_grise"])
     constat = get_object_or_404(models.Constat, id_constat=id_constat)
     voiture = models.Voiture.objects.create(
         constat=constat,
         type=data["type"],
         marque=data["type"],
         immatriculation=imm,
-        carte_grise=cg,
+        carte_grise=data["carte_grise"],
     )
     serializer = serializers.voitureSerializer(voiture, many=False)
     return Response(serializer.data)
-
 
 @api_view(["POST"])
 def create_accident(request, id_constat):
@@ -136,6 +145,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
+@api_view(['POST'])
+def logout(request):
+    try:
+        refresh_token = request.data["refresh"]
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response({"message": "Successfully logged out."})
+    except Exception as e:
+        return Response({"error": str(e)})
 
 @api_view(['POST'])
 def create_user(request):

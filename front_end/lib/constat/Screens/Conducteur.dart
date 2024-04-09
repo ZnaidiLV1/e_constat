@@ -1,162 +1,173 @@
-import 'package:e_constat/constat/Screens/Assure.dart';
+
 import 'package:flutter/material.dart';
+import 'package:front_end1/constat/Screens/form_field.dart';
+import 'package:front_end1/vehicule_type.dart';
+import 'package:http/http.dart' as http;
+
 
 class Conducteur extends StatefulWidget {
-  final Color color;
-  final String type;
-  const Conducteur({super.key, required this.color, required this.type});
+  http.Client client;
+  String constat_id;
+  Conducteur({super.key, required this.constat_id, required this.client});
 
   @override
   State<Conducteur> createState() => _ConducteurState();
 }
 
 class _ConducteurState extends State<Conducteur> {
-  bool ischecked = false;
+  http.Client client = http.Client();
   final GlobalKey<FormState> formKey = GlobalKey();
+  String nom_field = "";
+  String prenom_field = "";
+  String email_field = "";
+  String num_tlfn_field = "";
+  String num_tlfn_autre_assure_field = "";
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+    return Scaffold(
+      body: Container(
+        // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
         decoration: BoxDecoration(
-          color: widget.color,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: widget.color,
-            width: 4,
-          ),
+          color: const Color(0xFF002A29),
         ),
         child: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.person,
-                  size: 60,
-                  color: Colors.white,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Conducteur",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      widget.type,
-                      style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ],
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Color(0xFFD2A347),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const Text(
+                    "Conducteur",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFD2A347)),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
-              height: 20,
+              height: 50,
             ),
             Container(
               child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      CostumTextFormField(
-                        hint: "Nom",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Prénom",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Email",
-                        keybordtype: TextInputType.text,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Numéro de Télephone",
-                        keybordtype: TextInputType.phone,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Permis de conduit N°",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Date de délivrance du permis ",
-                        keybordtype: TextInputType.datetime,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  )),
+                key: formKey,
+                child: Column(
+                  children: [
+                    form_field(
+                      text: "Nom",
+                      icon: Icons.person_2_sharp,
+                      on_changed: (value) {
+                        nom_field = value;
+                      },
+                      keyboard_type: TextInputType.text,
+                    ),
+                    form_field(
+                      text: "Prenom",
+                      icon: Icons.person_2_sharp,
+                      on_changed: (value) {
+                        prenom_field = value;
+                      },
+                      keyboard_type: TextInputType.text,
+                    ),
+                    form_field(
+                      text: "Numero Permis",
+                      icon: Icons.car_repair,
+                      on_changed: (value) {
+                        email_field = value;
+                      },
+                      keyboard_type: TextInputType.emailAddress,
+                    ),
+                    form_field(
+                      text: "Numero Telephone",
+                      icon: Icons.format_list_numbered_outlined,
+                      on_changed: (value) {
+                        num_tlfn_field = value;
+                      },
+                      keyboard_type: TextInputType.number,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Annuler'),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Suivant'),
-              ),
-            ]),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Annuler',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFD2A347),
+                        onPrimary: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Uri create_consucteurURI = Uri.parse(
+                        //     "http://10.0.2.2:8000/api/${widget.ass.numr_tlfn}/conducteur/");
+                        // client.post(create_consucteurURI, body: {
+                        //   'assure': widget.ass.numr_tlfn.toString(),
+                        //   'numr_tlfn': num_tlfn_field,
+                        //   'first_name': nom_field,
+                        //   'last_name': prenom_field,
+                        //   'num_permis': email_field,
+                        // });
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => type(
+                                  client: client,
+                                  constat_id: widget.constat_id,
+                                )));
+                      },
+                      child: Text(
+                        'Suivant',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFD2A347),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CostumTextFormField extends StatelessWidget {
-  final String hint;
-  final TextInputType keybordtype;
-  CostumTextFormField(
-      {super.key, required this.hint, required this.keybordtype});
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      keyboardType: keybordtype,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return "ce champ est obligatoire";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
-        fillColor: Colors.white,
-        filled: true,
-        hintText: hint,
-        hintStyle:
-            TextStyle(fontWeight: FontWeight.w500, color: Colors.grey[500]),
       ),
     );
   }

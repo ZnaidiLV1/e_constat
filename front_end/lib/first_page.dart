@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:front_end1/connexion/login.dart';
+import 'package:front_end1/connexion/signup.dart';
+import 'package:front_end1/constat/OneUser/StepOne.dart';
 import 'package:lottie/lottie.dart';
 
 class first_page extends StatefulWidget {
@@ -18,7 +20,7 @@ class _first_pageState extends State<first_page> {
     double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldkey,
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color(0xFF002A29),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
@@ -50,7 +52,7 @@ class _first_pageState extends State<first_page> {
                 height: screenheight * 0.1,
                 width: screenWidth * 0.8,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF193A59),
+                  color: Color(0xFFD2A347),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: MaterialButton(
@@ -63,7 +65,7 @@ class _first_pageState extends State<first_page> {
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: Color(0xFF002A29)),
                   ).animate().fade(delay: const Duration(seconds: 1)).slideY(),
                 ),
               ),
@@ -72,17 +74,19 @@ class _first_pageState extends State<first_page> {
                 height: screenheight * 0.1,
                 width: screenWidth * 0.8,
                 decoration: const BoxDecoration(
-                  color: Color(0xFF193A59),
+                  color: Color(0xFFD2A347),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
+                  },
                   child: const Text(
-                    "Creer un Compte",
+                    "Login",
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white),
+                        color: Color(0xFF002A29)),
                   ).animate().fade(delay: const Duration(seconds: 2)).slideY(),
                 ),
               ),
@@ -104,7 +108,7 @@ class BottomSheetContent extends StatelessWidget {
       },
       child: Container(
         height: screenheight * 0.25,
-        color: Colors.grey[400],
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -112,78 +116,53 @@ class BottomSheetContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                'choisir le mode de saisie',
+                'CHOISIR LE MODE DE SAISIE',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                    color: Color(0xFF002A29)),
               ),
               const SizedBox(height: 15),
               ElevatedButton(
+                child: Text(
+                  '1 SEUL CONDUCTEUR',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
                 onPressed: () {
-                  showDialog(context: context, builder: ((context) => Alert()));
+                  showDialog(
+                      context: context, builder: ((context) => StepOne()));
                 },
-                child: const Text('2 conducteurs sur 2 smartphone'),
               ),
               const SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, "stepOne2");
                 },
-                child: const Text('2 conducteurs sur 1 smartphone'),
+                child: Text(
+                  '2 CONDUCTEURS SUR 2 TELEPHONES',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Alert extends StatelessWidget {
-  const Alert({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      contentPadding: const EdgeInsets.all(10),
-      titlePadding: const EdgeInsets.all(20),
-      title: const Text(
-        "Conducteur B",
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-      ),
-      content: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const IntlPhoneField(
-              decoration: InputDecoration(
-                labelText: "Numéro de téléphone",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(),
-                ),
-              ),
-              initialCountryCode: "TN",
-            ),
-            const SizedBox(height: 16),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Annuler'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  //envoyer un sms au conducteur B
-                  Navigator.pushNamed(context, "stepOne1");
-                },
-                child: const Text('Envoyer'),
-              ),
-            ]),
-          ],
         ),
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:e_constat/constat/Screens/Dommage.dart';
+import 'package:front_end1/constat/Screens/Dommage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -155,12 +155,10 @@ class _StepThreeState extends State<StepThree> {
                   ),
                   onPressed: () {
                     if (!chocExiste) {
-                      showDialog(
-                          context: context,
-                          builder: (context) => Dommage(
-                                color: widget.color,
-                                type: widget.type,
-                              ));
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (context) => Dommage(client: null,
+                      //         ));
                     }
                   },
                   child: const Text("Suivant")),

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:front_end1/first_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:jwt_decode/jwt_decode.dart';
 
 class Accueil extends StatefulWidget {
-  const Accueil({super.key});
+  String refreshtoken;
+  Accueil({super.key, required this.refreshtoken});
 
   @override
   State<Accueil> createState() => _AccueilState();
 }
 
 class _AccueilState extends State<Accueil> {
+  http.Client client = http.Client();
+  String extract_username() {
+    Map<String, dynamic> username = Jwt.parseJwt(widget.refreshtoken);
+    return username["username"];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,13 +93,24 @@ class _AccueilState extends State<Accueil> {
         ),
       ),
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              client.post(Uri.parse("http://10.0.2.2:8000/api/logout/"),
+                  body: {"refresh": widget.refreshtoken});
+                  Navigator.of(context).push(MaterialPageRoute(builder: 
+                  (context)=>first_page()));
+            },
+            icon: Icon(Icons.logout)),
         backgroundColor: Color(0xff00897b),
-        title: const Text(
+        title: Text(
           "Acceuil",
           style: TextStyle(
               fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
+      body: ListView(children: [
+        Text(extract_username())
+      ]),
     );
   }
 }

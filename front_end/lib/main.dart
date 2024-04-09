@@ -1,18 +1,19 @@
-import 'package:e_constat/connexion/Accueil.dart';
-import 'package:e_constat/connexion/Connexion.dart';
-import 'package:e_constat/connexion/MonProfil.dart';
-import 'package:e_constat/constat/OneUser/StepOne.dart';
-import 'package:e_constat/constat/OneUser/StepTwo.dart';
-import 'package:e_constat/constat/TwoUser/StepOneTwoUser.dart';
-
-import 'package:e_constat/constat/TwoUser/StepTwo2User.dart';
-import 'package:e_constat/first_page.dart';
-import 'package:e_constat/firstpage.dart';
-
 import 'package:flutter/material.dart';
 
+// Assuming first_page.dart contains your desired home page content
+import 'package:front_end1/first_page.dart';
+
+// Import other screens based on your navigation needs
+import 'package:front_end1/connexion/Accueil.dart';
+import 'package:front_end1/connexion/Connexion.dart';
+import 'package:front_end1/connexion/signup.dart';
+import 'package:front_end1/constat/OneUser/StepOne.dart';
+import 'package:front_end1/constat/OneUser/StepTwo.dart';
+import 'package:front_end1/constat/TwoUser/StepOneTwoUser.dart';
+import 'package:front_end1/constat/TwoUser/StepTwo2User.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -26,13 +27,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+
       routes: {
-        "/": (context) => const first_page(),
+        "/": (context) => const first_page(), 
         "connexion": (context) => const Connexion(),
-        "profil": (context) => const MonProfil(),
-        "Accueil": (context) => const Accueil(),
+        "profil": (context) => const signup(),
         "stepOne2": (context) => const StepOneTwoUser(),
         "stepTwo2": (context) => const StepTwo2User(),
         "stepOne1": (context) => const StepOne(),

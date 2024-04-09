@@ -7,6 +7,7 @@ class Assure(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     num_permis = models.IntegerField()
+    numr_tlfn_autre_assure=models.IntegerField(default=0)
 
 class Conducteur(models.Model):
     assure = models.ForeignKey(Assure, on_delete=models.CASCADE, related_name='conductor')

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:front_end1/constat/Screens/CustomCard.dart';
+import 'package:front_end1/constat/Screens/form_field.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 class Dommage extends StatefulWidget {
-  final Color color;
-  final String type;
-  const Dommage({super.key, required this.color, required this.type});
+  http.Client client;
+  Dommage({super.key, required this.client});
 
   @override
   State<Dommage> createState() => _DommageState();
@@ -16,6 +18,7 @@ class Dommage extends StatefulWidget {
 
 class _DommageState extends State<Dommage> {
   File? _image;
+  String description_field = '';
   final picker = ImagePicker();
   TextEditingController _descriptionController = TextEditingController();
   Future getImageFromGallery() async {
@@ -46,9 +49,7 @@ class _DommageState extends State<Dommage> {
           CupertinoActionSheetAction(
             child: const Text('Photo Gallery'),
             onPressed: () {
-              // close the options modal
               Navigator.of(context).pop();
-              // get image from gallery
               getImageFromGallery();
             },
           ),
@@ -56,7 +57,6 @@ class _DommageState extends State<Dommage> {
             child: const Text('Camera'),
             onPressed: () {
               Navigator.of(context).pop();
-
               getImageFromCamera();
             },
           ),
@@ -67,8 +67,9 @@ class _DommageState extends State<Dommage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Column(
+    return Scaffold(
+      backgroundColor: Color(0xFF002A29),
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -76,30 +77,24 @@ class _DommageState extends State<Dommage> {
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(
-                color: widget.color, borderRadius: BorderRadius.circular(40)),
+                color: Color(0xFFD2A347),
+                borderRadius: BorderRadius.circular(40)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Text(
-                  "Véhicule",
+                  "Dégats",
                   style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Text(
-                  widget.type,
-                  style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      color: Color(0xFF002A29)),
                 ),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: const Icon(
-                    Icons.directions_car_filled_sharp,
+                    Icons.car_crash_sharp,
                     size: 30,
-                    color: Colors.white,
+                    color: Color(0xFF002A29),
                   ),
                 )
               ],
@@ -111,9 +106,9 @@ class _DommageState extends State<Dommage> {
                     width: MediaQuery.of(context).size.width / 1.5,
                     height: MediaQuery.of(context).size.width / 1.5,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Color(0xFFD2A347),
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey)),
+                        border: Border.all(color: Color(0xFFD2A347))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,14 +121,14 @@ class _DommageState extends State<Dommage> {
                           onPressed: () {
                             showOptions();
                           },
-                          color: Colors.white,
+                          color: Color(0xFF002A29),
                         ),
                         const Text(
                           "Ajouter une photo",
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                              color: Color(0xFF002A29)),
                         )
                       ],
                     ))
@@ -148,7 +143,7 @@ class _DommageState extends State<Dommage> {
                           child: Container(
                             width: MediaQuery.of(context).size.width / 1.5,
                             padding: const EdgeInsets.all(10),
-                            color: Colors.grey,
+                            color: Color(0xFFD2A347),
                             child: InkWell(
                               onTap: () {
                                 setState(() {
@@ -169,58 +164,54 @@ class _DommageState extends State<Dommage> {
                       )
                     ])),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            alignment: Alignment.topLeft,
-            child: TextField(
-              controller: _descriptionController,
-              minLines: 1,
-              maxLines: 4,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                labelText: "Description des dégats ",
-                labelStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey),
-              ),
-              textInputAction: TextInputAction.done,
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          //   alignment: Alignment.topLeft,
+          //   child: TextField(
+          //     controller: _descriptionController,
+          //     minLines: 1,
+          //     maxLines: 4,
+          //     decoration: const InputDecoration(
+          //       border: OutlineInputBorder(
+          //           borderRadius: BorderRadius.all(Radius.circular(20))),
+          //       labelText: "Description des dégats ",
+          //       labelStyle: TextStyle(
+          //           fontSize: 14,
+          //           fontWeight: FontWeight.w300,
+          //           color: Colors.grey),
+          //     ),
+          //     textInputAction: TextInputAction.done,
+          //   ),
+          // ),
+          form_field(
+              text: "Description des degats",
+              icon: Icons.description,
+              on_changed: (value) {
+                setState(() {
+                  description_field = value;
+                });
+              },
+              keyboard_type: TextInputType.text),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xffF78D1E)), // Set background color
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white), // Set text color
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ), // Set padding
-                    elevation: MaterialStateProperty.all<double>(10),
+                child: Text(
+                  'Suivant',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("retour")),
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xffF78D1E)), // Set background color
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white), // Set text color
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ), // Set padding
-                    elevation: MaterialStateProperty.all<double>(10),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFFD2A347),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Suivant")),
+                ),
+                onPressed: () {},
+              )
             ],
           )
         ],

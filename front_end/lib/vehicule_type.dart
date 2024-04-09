@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:front_end1/constat/Screens/vehicule.dart';
+import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:card_swiper/card_swiper.dart';
 
 class type extends StatefulWidget {
-  const type({super.key});
+  http.Client client;
+  String constat_id;
+  type({super.key, required this.client, required this.constat_id});
 
   @override
   State<type> createState() => _typeState();
@@ -18,21 +22,25 @@ class _typeState extends State<type> {
     Lottie.network(
         'https://lottie.host/0df3a31d-9325-4639-a449-950110f415cb/xQHiK7mprx.json')
   ];
+  List type_list = ["Voiture", "Motocyclette", "Camion"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: const Color(0xFF002A29),
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Color(0xFFD2A347),
         title: Text(
           "CHOOSE THE VEHICULE TYPE",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF002A29)),
         ),
       ),
       body: Center(
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[400],
+            color: Color(0xFFD2A347),
             borderRadius: BorderRadius.circular(15),
           ),
           height: 400,
@@ -46,7 +54,12 @@ class _typeState extends State<type> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  print(index);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => Vehicule(
+                            client: widget.client,
+                            type_vehicule: type_list[index],
+                            consta_id: widget.constat_id,
+                          )));
                 },
                 child: Container(
                   child: icon_list[index],

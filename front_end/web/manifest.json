@@ -1,6 +1,6 @@
 {
-    "name": "e_constat",
-    "short_name": "e_constat",
+    "name": "front_end1",
+    "short_name": "front_end1",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

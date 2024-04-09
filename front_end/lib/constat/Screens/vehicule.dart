@@ -1,146 +1,180 @@
-import 'package:e_constat/constat/Screens/typeVehicule.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
+import 'package:front_end1/constat/Screens/Dommage.dart';
+import 'package:front_end1/constat/Screens/form_field.dart';
+import 'package:front_end1/serializer/constat.dart';
+import 'package:http/http.dart' as http;
+
+import '../../serializer/assure.dart';
 
 class Vehicule extends StatefulWidget {
-  final Color color;
-  final String type;
-  const Vehicule({super.key, required this.color, required this.type});
+  String type_vehicule;
+  http.Client client;
+  String consta_id;
+  Vehicule(
+      {super.key,
+      required this.client,
+      required this.consta_id,
+      required this.type_vehicule});
 
   @override
   State<Vehicule> createState() => _VehiculeState();
 }
 
 class _VehiculeState extends State<Vehicule> {
-  bool ischecked = false;
+  http.Client client = http.Client();
   final GlobalKey<FormState> formKey = GlobalKey();
+  String carte_grise_field = "";
+  String immatriculation_field = "";
+  String marque_field = "";
+  String type_field = "";
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+    return Scaffold(
+      body: Container(
+        // margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
         decoration: BoxDecoration(
-          color: widget.color,
-          borderRadius: BorderRadius.circular(20.0),
-          border: Border.all(
-            color: widget.color,
-            width: 4,
-          ),
+          color: const Color(0xFF002A29),
         ),
         child: ListView(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.directions_car,
-                  size: 60,
-                  color: Colors.white,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  widget.type,
-                  style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.person,
+                    size: 60,
+                    color: Color(0xFFD2A347),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  const Text(
+                    "Véhicule",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFD2A347)),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
               height: 50,
             ),
             Container(
               child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      CostumTextFormField(
-                        hint: "Societé d'assurance",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Contrat N°",
-                        keybordtype: TextInputType.number,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Agence",
-                        keybordtype: TextInputType.number,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "N° d'immatriculation",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CostumTextFormField(
-                        hint: "Marque",
-                        keybordtype: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  )),
+                key: formKey,
+                child: Column(
+                  children: [
+                    form_field(
+                      text: "Carte Grise",
+                      icon: Icons.person_2_sharp,
+                      on_changed: (value) {
+                        carte_grise_field = value;
+                      },
+                      keyboard_type: TextInputType.text,
+                    ),
+                    form_field(
+                      text: "Immatriculation",
+                      icon: Icons.person_2_sharp,
+                      on_changed: (value) {
+                        immatriculation_field = value;
+                      },
+                      keyboard_type: TextInputType.number,
+                    ),
+                    form_field(
+                      text: "Marque",
+                      icon: Icons.car_repair,
+                      on_changed: (value) {
+                        marque_field = value;
+                      },
+                      keyboard_type: TextInputType.emailAddress,
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Annuler'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) =>
-                          TypeVehicule(type: widget.type, color: widget.color));
-                },
-                child: const Text('Suivant'),
-              ),
-            ]),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    //   ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.pop(context);
+                    //     },
+                    //     child: const Text(
+                    //       'Annuler',
+                    //       style: TextStyle(
+                    //         fontSize: 20,
+                    //         fontWeight: FontWeight.bold,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //     style: ElevatedButton.styleFrom(
+                    //       primary: Color(0xFFD2A347), // Set background color
+                    //       onPrimary: Colors.black, // Set text color (optional)
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius:
+                    //             BorderRadius.circular(30), // Set border radius
+                    //       ),
+                    //     ),
+                    //   ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Uri create_consucteurURI = Uri.parse(
+                        //     "http://10.0.2.2:8000/api/${widget.consta_id}/create_voiture/");
+                        // client.post(create_consucteurURI, body: {
+                        //   'constat': widget.consta_id,
+                        //   'carte_grise': carte_grise_field,
+                        //   'immatriculation': immatriculation_field,
+                        //   'marque': marque_field,
+                        //   'type': widget.type_vehicule,
+                        // });
+                        // if (widget.reponse) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => Dommage(
+                                  client: client,
+                                )));
+                        // } else {
+                        //   Navigator.of(context).pushReplacement(
+                        //       MaterialPageRoute(
+                        //           builder: (context) => const Conducteur(
+                        //               color: Color(0xFF002A29),
+                        //               type: "Vehicule")));
+                        // }
+                      },
+                      child: Text(
+                        'Suivant',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFD2A347),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ]),
+            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CostumTextFormField extends StatelessWidget {
-  final String hint;
-  final TextInputType keybordtype;
-  CostumTextFormField(
-      {super.key, required this.hint, required this.keybordtype});
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: keybordtype,
-      autovalidateMode: AutovalidateMode.always,
-      validator: (value) {
-        if (value == null) {
-          return "ce champ est obligatoire";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
-        fillColor: Colors.white,
-        filled: true,
-        hintText: hint,
-        hintStyle:
-            TextStyle(fontWeight: FontWeight.w500, color: Colors.grey[500]),
       ),
     );
   }
