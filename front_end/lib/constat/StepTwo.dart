@@ -1,10 +1,18 @@
-import 'package:front_end1/constat/stepTree/stepThree.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:front_end1/constat/stepThree.dart';
+import 'package:http/http.dart' as http;
 
 class StepTwo extends StatefulWidget {
-  const StepTwo({super.key});
+  final String type_vehicule;
+  final http.Client client;
+  final String consta_id;
+  const StepTwo(
+      {super.key,
+      required this.type_vehicule,
+      required this.client,
+      required this.consta_id});
 
   @override
   State<StepTwo> createState() => _StepTwoState();
@@ -58,7 +66,7 @@ class _StepTwoState extends State<StepTwo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffF78D1E),
+        backgroundColor: Color.fromARGB(255, 41, 106, 166),
         title: const Text(
           "Etape 2",
           style: TextStyle(
@@ -67,9 +75,9 @@ class _StepTwoState extends State<StepTwo> {
       ),
       body: ListView(children: [
         const LinearProgressIndicator(
-          value: 0.2,
+          value: 0.3,
           color: Colors.black,
-          valueColor: AlwaysStoppedAnimation<Color>(Color(0xff00897b)),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
         ),
         Container(
           alignment: Alignment.center,
@@ -177,8 +185,11 @@ class _StepTwoState extends State<StepTwo> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const StepThree(
-                                    color: Color(0xff125d84), type: "A")));
+                                builder: (context) => StepThree(
+                                      type_vehicule: widget.type_vehicule,
+                                      client: widget.client,
+                                      consta_id: widget.consta_id,
+                                    )));
                       },
                       child: const Text("Suivant")),
                 ],

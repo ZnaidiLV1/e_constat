@@ -28,11 +28,13 @@ class _AssureState extends State<Assure> {
   String email_field = "";
   String num_tlfn_field = "";
   String num_tlfn_autre_assure_field = "";
-  Future get_constat(id_assure)async
-  {
-    Constat response = json.decode((await client.get(Uri.parse("http://10.0.2.2:8000/api/${id_assure}/get_constat/"))).body);
+  Future get_constat(id_assure) async {
+    Constat response = json.decode((await client.get(
+            Uri.parse("http://10.0.2.2:8000/api/${id_assure}/get_constat/")))
+        .body);
     return response.id_constat;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,11 +148,10 @@ class _AssureState extends State<Assure> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347), 
-                        onPrimary: Colors.black, 
+                        foregroundColor: Colors.black,
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(30), 
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                     ),
@@ -171,9 +172,12 @@ class _AssureState extends State<Assure> {
                         // client.post(create_constatURI,
                         //     body: {'assure': num_tlfn_field});
                         if (widget.reponse) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>  type(client: client, constat_id: "1",)));
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => type(
+                                        client: client,
+                                        constat_id: "1",
+                                      )));
                         } else {
                           // assure ass = assure(
                           //   numr_tlfn: int.parse(num_tlfn_field),
@@ -184,10 +188,12 @@ class _AssureState extends State<Assure> {
                           //   numr_tlfn_autre_assure:
                           //       int.parse(num_tlfn_autre_assure_field),
                           // );
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
                                   builder: (context) => Conducteur(
-                                      client: client, constat_id: '1',)));
+                                        client: client,
+                                        constat_id: '1',
+                                      )));
                         }
                       },
                       child: Text(
@@ -199,7 +205,7 @@ class _AssureState extends State<Assure> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

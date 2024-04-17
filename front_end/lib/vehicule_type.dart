@@ -22,15 +22,15 @@ class _typeState extends State<type> {
     Lottie.network(
         'https://lottie.host/0df3a31d-9325-4639-a449-950110f415cb/xQHiK7mprx.json')
   ];
-  List type_list = ["Voiture", "Motocyclette", "Camion"];
+  List<String> type_list = ["Voiture", "Motocyclette", "Camion"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF002A29),
       appBar: AppBar(
         backgroundColor: Color(0xFFD2A347),
-        title: Text(
-          "CHOOSE THE VEHICULE TYPE",
+        title: const Text(
+          "Choisissez le type de véhicule",
           style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,

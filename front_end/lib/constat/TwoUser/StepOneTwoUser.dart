@@ -14,7 +14,7 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffF78D1E),
+        backgroundColor: Color.fromARGB(255, 41, 106, 166),
         title: const Text(
           "Etape 1",
           style: TextStyle(
@@ -27,12 +27,13 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
           const LinearProgressIndicator(
             value: 0.1,
             color: Colors.black,
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff00897b)),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
           ),
           Container(
+            alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 20, left: 10),
             child: const Text(
-              "Identification du véhicule et du conducteur",
+              "Identification du l'Assuré",
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -58,41 +59,6 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
           const SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xffF78D1E)), // Set background color
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white), // Set text color
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ), // Set padding
-                    elevation: MaterialStateProperty.all<double>(10),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("retour")),
-              ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xffF78D1E)), // Set background color
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        Colors.white), // Set text color
-                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    ), // Set padding
-                    elevation: MaterialStateProperty.all<double>(10),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, "stepTwo2");
-                  },
-                  child: const Text("Suivant")),
-            ],
-          )
         ],
       ),
     );

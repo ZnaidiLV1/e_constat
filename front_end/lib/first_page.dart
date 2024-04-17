@@ -20,7 +20,7 @@ class _first_pageState extends State<first_page> {
     double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
       key: scaffoldkey,
-      backgroundColor: Color(0xFF002A29),
+      backgroundColor: Color.fromARGB(255, 18, 124, 123),
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
@@ -79,7 +79,8 @@ class _first_pageState extends State<first_page> {
                 ),
                 child: MaterialButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>login()));
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) => login()));
                   },
                   child: const Text(
                     "Login",
@@ -125,14 +126,14 @@ class BottomSheetContent extends StatelessWidget {
               const SizedBox(height: 15),
               ElevatedButton(
                 child: Text(
-                  '1 SEUL CONDUCTEUR',
+                  '2 CONDUCTEUR SUR 2 TELEPHONES',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
+                  backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -148,14 +149,14 @@ class BottomSheetContent extends StatelessWidget {
                   Navigator.pushNamed(context, "stepOne2");
                 },
                 child: Text(
-                  '2 CONDUCTEURS SUR 2 TELEPHONES',
+                  '2 CONDUCTEURS SUR 1 TELEPHONE',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black,
+                  backgroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

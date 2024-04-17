@@ -124,8 +124,7 @@ class _AccidentState extends State<Accident> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
-                        onPrimary: Colors.black,
+                        foregroundColor: Colors.black, backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -157,7 +156,7 @@ class _AccidentState extends State<Accident> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

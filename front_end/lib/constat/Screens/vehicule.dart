@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:front_end1/constat/StepTwo.dart';
 import 'package:front_end1/constat/Screens/Dommage.dart';
 import 'package:front_end1/constat/Screens/form_field.dart';
 import 'package:front_end1/serializer/constat.dart';
@@ -9,9 +10,9 @@ import 'package:http/http.dart' as http;
 import '../../serializer/assure.dart';
 
 class Vehicule extends StatefulWidget {
-  String type_vehicule;
-  http.Client client;
-  String consta_id;
+  final String type_vehicule;
+  final http.Client client;
+  final String consta_id;
   Vehicule(
       {super.key,
       required this.client,
@@ -29,6 +30,10 @@ class _VehiculeState extends State<Vehicule> {
   String immatriculation_field = "";
   String marque_field = "";
   String type_field = "";
+  String assurance_field = "";
+  int? num_contat_field;
+  int? agence_field;
+
   @override
   void initState() {
     super.initState();
@@ -79,14 +84,6 @@ class _VehiculeState extends State<Vehicule> {
                 child: Column(
                   children: [
                     form_field(
-                      text: "Carte Grise",
-                      icon: Icons.person_2_sharp,
-                      on_changed: (value) {
-                        carte_grise_field = value;
-                      },
-                      keyboard_type: TextInputType.text,
-                    ),
-                    form_field(
                       text: "Immatriculation",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -102,6 +99,27 @@ class _VehiculeState extends State<Vehicule> {
                       },
                       keyboard_type: TextInputType.emailAddress,
                     ),
+                    form_field(
+                        text: "Entreprise d'Assurance",
+                        icon: Icons.admin_panel_settings_outlined,
+                        on_changed: (value) {
+                          assurance_field = value;
+                        },
+                        keyboard_type: TextInputType.text),
+                    form_field(
+                        text: "Contrat N°",
+                        icon: Icons.assignment_outlined,
+                        on_changed: (value) {
+                          num_contat_field = value as int?;
+                        },
+                        keyboard_type: TextInputType.number),
+                    form_field(
+                        text: "Agence",
+                        icon: Icons.business_center_rounded,
+                        on_changed: (value) {
+                          agence_field = value as int?;
+                        },
+                        keyboard_type: TextInputType.number),
                   ],
                 ),
               ),
@@ -111,27 +129,28 @@ class _VehiculeState extends State<Vehicule> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    //   ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.pop(context);
-                    //     },
-                    //     child: const Text(
-                    //       'Annuler',
-                    //       style: TextStyle(
-                    //         fontSize: 20,
-                    //         fontWeight: FontWeight.bold,
-                    //         color: Colors.black,
-                    //       ),
-                    //     ),
-                    //     style: ElevatedButton.styleFrom(
-                    //       primary: Color(0xFFD2A347), // Set background color
-                    //       onPrimary: Colors.black, // Set text color (optional)
-                    //       shape: RoundedRectangleBorder(
-                    //         borderRadius:
-                    //             BorderRadius.circular(30), // Set border radius
-                    //       ),
-                    //     ),
-                    //   ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Annuler',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor:
+                            Color(0xFFD2A347), // Set text color (optional)
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(30), // Set border radius
+                        ),
+                      ),
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         // Uri create_consucteurURI = Uri.parse(
@@ -145,9 +164,10 @@ class _VehiculeState extends State<Vehicule> {
                         // });
                         // if (widget.reponse) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => Dommage(
-                                  client: client,
-                                )));
+                            builder: (context) => StepTwo(
+                                type_vehicule: widget.type_vehicule,
+                                client: widget.client,
+                                consta_id: widget.consta_id)));
                         // } else {
                         //   Navigator.of(context).pushReplacement(
                         //       MaterialPageRoute(
@@ -165,7 +185,7 @@ class _VehiculeState extends State<Vehicule> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

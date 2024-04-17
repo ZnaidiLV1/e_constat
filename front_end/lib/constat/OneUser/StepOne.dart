@@ -14,7 +14,7 @@ class _StepOneState extends State<StepOne> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF193A59),
+        backgroundColor: Color.fromARGB(255, 41, 106, 166),
         title: const Text(
           "Etape 1",
           style: TextStyle(
@@ -27,9 +27,10 @@ class _StepOneState extends State<StepOne> {
           const LinearProgressIndicator(
             value: 0.1,
             color: Colors.black,
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff00897b)),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
           ),
           Container(
+            alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 20, left: 10),
             child: const Text(
               "Identification du l'Assuré",
@@ -50,7 +51,6 @@ class _StepOneState extends State<StepOne> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 10,
           ),
-          
         ],
       ),
     );

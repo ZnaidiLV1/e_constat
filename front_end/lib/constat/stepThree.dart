@@ -1,18 +1,21 @@
-import 'package:front_end1/constat/Screens/Dommage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class StepThree extends StatefulWidget {
-  final Color color;
-  final String type;
-  const StepThree({super.key, required this.color, required this.type});
-
+  final String type_vehicule;
+  final http.Client client;
+  final String consta_id;
+  const StepThree(
+      {required this.type_vehicule,
+      required this.client,
+      required this.consta_id});
   @override
   State<StepThree> createState() => _StepThreeState();
 }
 
 class _StepThreeState extends State<StepThree> {
   bool chocExiste = false;
+  String? img;
 
   List<bool> selectedSpots = List.generate(11, (index) => false);
 
@@ -22,11 +25,23 @@ class _StepThreeState extends State<StepThree> {
     });
   }
 
+  Offset? chocPosition;
   @override
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
+    if (widget.type_vehicule == "Voiture") {
+      img = 'Voiture.png';
+    }
+    if (widget.type_vehicule == "Motocyclette") {
+      img = "Motocyclette.jpg";
+    }
+    if (widget.type_vehicule == "Camion") {
+      img = "Camion.jpg";
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffF78D1E),
+        backgroundColor: Color.fromARGB(255, 41, 106, 166),
         title: const Text(
           "Etape 3",
           style: TextStyle(
@@ -36,9 +51,9 @@ class _StepThreeState extends State<StepThree> {
       body: ListView(
         children: [
           const LinearProgressIndicator(
-            value: 0.3,
+            value: 0.5,
             color: Colors.black,
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xff00897b)),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
           ),
           Container(
             alignment: Alignment.center,
@@ -51,58 +66,60 @@ class _StepThreeState extends State<StepThree> {
                   color: Colors.black45),
             ),
           ),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: screenheight / 10,
           ),
           Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                decoration: BoxDecoration(
-                    color: widget.color,
-                    borderRadius: BorderRadius.circular(40)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const Text(
-                      "Véhicule",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      widget.type,
-                      style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: const Icon(
-                        Icons.directions_car_filled_sharp,
-                        size: 30,
-                        color: Colors.white,
+              Column(
+                children: [
+                  const Text(
+                    "Appuyez sur la zone de choc de votre véhicule",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueGrey),
+                  ),
+                  SizedBox(
+                    height: screenheight / 20,
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      onTapDown: (details) {
+                        setState(() {
+                          chocPosition = details.localPosition;
+                        });
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: Image.asset(
+                              'images/$img',
+                            ),
+                          ), // Replace with your car image
+                          if (chocPosition != null && !chocExiste)
+                            Positioned(
+                              top: chocPosition!.dy -
+                                  20, // Adjust the position as needed
+                              left: chocPosition!.dx - 20,
+                              child: const Icon(
+                                Icons.warning_rounded,
+                                color: Colors.red,
+                                size: 40,
+                              ),
+                            ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenheight / 20,
+                  ),
+                ],
               ),
               const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Appuyez sur la zone de choc de votre véhicule",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: widget.color),
-              ),
-              const PointChoc(),
-              const SizedBox(
-                height: 10,
+                height: 30,
               ),
               Row(
                 children: [
@@ -165,50 +182,6 @@ class _StepThreeState extends State<StepThree> {
             ],
           )
         ],
-      ),
-    );
-  }
-}
-
-class PointChoc extends StatefulWidget {
-  const PointChoc({super.key});
-
-  @override
-  State<PointChoc> createState() => _PointChocState();
-}
-
-class _PointChocState extends State<PointChoc> {
-  Offset? chocPosition;
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTapDown: (details) {
-          setState(() {
-            chocPosition = details.localPosition;
-            //  print(chocPosition);
-          });
-        },
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 1.5,
-              child: Image.asset(
-                'images/car_dessus.png',
-              ),
-            ), // Replace with your car image
-            if (chocPosition != null)
-              Positioned(
-                top: chocPosition!.dy - 20, // Adjust the position as needed
-                left: chocPosition!.dx - 20,
-                child: const Icon(
-                  Icons.warning_rounded,
-                  color: Colors.red,
-                  size: 40,
-                ),
-              ),
-          ],
-        ),
       ),
     );
   }
