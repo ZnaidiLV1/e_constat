@@ -174,11 +174,11 @@ class _StepTwoState extends State<StepTwo> {
                         elevation: MaterialStateProperty.all<double>(10),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const StepThree(
-                                    color: Color(0xff125d84), type: "A")));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const StepThree(
+                        //             color: Color(0xff125d84), type: "A")));
                       },
                       child: const Text("Suivant")),
                 ],

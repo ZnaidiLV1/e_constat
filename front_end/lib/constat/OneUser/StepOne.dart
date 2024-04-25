@@ -3,7 +3,8 @@ import 'package:front_end1/constat/Screens/CustomCard.dart';
 import 'package:flutter/material.dart';
 
 class StepOne extends StatefulWidget {
-  const StepOne({super.key});
+  bool nb_assure_desire;
+  StepOne({super.key,required this.nb_assure_desire});
 
   @override
   State<StepOne> createState() => _StepOneState();
@@ -45,7 +46,7 @@ class _StepOneState extends State<StepOne> {
           CustomCard(
             titleCard: "",
             color: const Color(0xff125d84),
-            btn1: "Renseigner\n les informations du l'Assuré",
+            btn1: "Renseigner\n les informations du l'Assuré", nb_assure_rempli:widget.nb_assure_desire ,
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height / 10,

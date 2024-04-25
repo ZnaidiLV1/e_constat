@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:front_end1/constat/Screens/Accident.dart';
 import 'package:front_end1/constat/Screens/Conducteur.dart';
 import 'package:flutter/material.dart';
 import 'package:front_end1/constat/Screens/form_field.dart';
@@ -7,15 +8,9 @@ import 'package:front_end1/vehicule_type.dart';
 import 'package:http/http.dart' as http;
 
 class Assure extends StatefulWidget {
-  final Color color;
-  final String type;
   bool reponse;
-  Assure(
-      {super.key,
-      required this.color,
-      required this.type,
-      required this.reponse});
-
+  bool nb_assure_desire;
+  Assure({super.key, required this.reponse, required this.nb_assure_desire});
   @override
   State<Assure> createState() => _AssureState();
 }
@@ -28,11 +23,13 @@ class _AssureState extends State<Assure> {
   String email_field = "";
   String num_tlfn_field = "";
   String num_tlfn_autre_assure_field = "";
-  Future get_constat(id_assure)async
-  {
-    Constat response = json.decode((await client.get(Uri.parse("http://10.0.2.2:8000/api/${id_assure}/get_constat/"))).body);
+  Future get_constat(id_assure) async {
+    Constat response = json.decode((await client.get(
+            Uri.parse("http://10.0.2.2:8000/api/${id_assure}/get_constat/")))
+        .body);
     return response.id_constat;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +64,7 @@ class _AssureState extends State<Assure> {
                     width: 10,
                   ),
                   Text(
-                    widget.type,
+                    "",
                     style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -85,6 +82,7 @@ class _AssureState extends State<Assure> {
                 child: Column(
                   children: [
                     form_field(
+                      obscure: false,
                       text: "Nom",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -93,6 +91,7 @@ class _AssureState extends State<Assure> {
                       keyboard_type: TextInputType.text,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Prenom",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -101,6 +100,7 @@ class _AssureState extends State<Assure> {
                       keyboard_type: TextInputType.text,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Numero Permis",
                       icon: Icons.car_repair,
                       on_changed: (value) {
@@ -109,18 +109,11 @@ class _AssureState extends State<Assure> {
                       keyboard_type: TextInputType.number,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Numero Telephone",
                       icon: Icons.format_list_numbered_outlined,
                       on_changed: (value) {
                         num_tlfn_field = value;
-                      },
-                      keyboard_type: TextInputType.number,
-                    ),
-                    form_field(
-                      text: "Num Telephone de l'autre Assure",
-                      icon: Icons.format_list_numbered_rtl,
-                      on_changed: (value) {
-                        num_tlfn_autre_assure_field = value;
                       },
                       keyboard_type: TextInputType.number,
                     ),
@@ -146,11 +139,10 @@ class _AssureState extends State<Assure> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347), 
-                        onPrimary: Colors.black, 
+                        primary: Color(0xFFD2A347),
+                        onPrimary: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(30), 
+                          borderRadius: BorderRadius.circular(30),
                         ),
                       ),
                     ),
@@ -164,16 +156,21 @@ class _AssureState extends State<Assure> {
                         //   'last_name': prenom_field,
                         //   'num_permis': email_field,
                         //   'email_user': "test",
-                        //   'numr_tlfn_autre_assure': num_tlfn_autre_assure_field
                         // });
                         // Uri create_constatURI =
                         //     Uri.parse("http://10.0.2.2:8000/api/${num_tlfn_field}/create_constat/");
                         // client.post(create_constatURI,
-                        //     body: {'assure': num_tlfn_field});
+                        //     body: {'assure': num_tlfn_field,
+                        //            'numr_tlfn_autre_assure': num_tlfn_autre_assure_field});
                         if (widget.reponse) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>  type(client: client, constat_id: "1",)));
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => accident(
+                                        client: client,
+                                        constat_id: "4",
+                                        nb_assure_desire:
+                                            widget.nb_assure_desire,
+                                      )));
                         } else {
                           // assure ass = assure(
                           //   numr_tlfn: int.parse(num_tlfn_field),
@@ -184,10 +181,14 @@ class _AssureState extends State<Assure> {
                           //   numr_tlfn_autre_assure:
                           //       int.parse(num_tlfn_autre_assure_field),
                           // );
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => Conducteur(
-                                      client: client, constat_id: '1',)));
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (context) => conducteur(
+                                        client: client,
+                                        constat_id: '3',
+                                        nb_assure_desire:
+                                            widget.nb_assure_desire,
+                                      )));
                         }
                       },
                       child: Text(

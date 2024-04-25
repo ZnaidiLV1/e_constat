@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class form_field extends StatefulWidget {
   String text;
   IconData icon;
+  bool obscure;
   TextInputType keyboard_type; 
   ValueChanged<String> on_changed;
   form_field(
@@ -10,7 +11,8 @@ class form_field extends StatefulWidget {
       required this.text,
       required this.icon,
       required this.on_changed,
-      required this.keyboard_type});
+      required this.keyboard_type,
+      required this.obscure});
   @override
   State<form_field> createState() => _form_fieldState();
 }
@@ -45,7 +47,9 @@ class _form_fieldState extends State<form_field> {
           if (value!.isEmpty) return "field must not be empty";
         },
         keyboardType: widget.keyboard_type,
+        obscureText: widget.obscure,
         decoration: InputDecoration(
+
           prefixIcon: Icon(
             widget.icon,
             size: 25,

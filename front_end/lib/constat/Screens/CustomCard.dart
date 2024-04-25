@@ -7,9 +7,11 @@ class CustomCard extends StatelessWidget {
   final String titleCard;
   final String btn1;
   final Color color;
+  bool nb_assure_rempli;
   CustomCard(
       {required this.titleCard,
       required this.color,
+      required this.nb_assure_rempli,
       required this.btn1,
       super.key});
 
@@ -95,9 +97,7 @@ class CustomCard extends StatelessWidget {
                                       Navigator.of(context)
                                           .pushReplacement(MaterialPageRoute(
                                               builder: (constext) => Assure(
-                                                    color: color,
-                                                    type: titleCard,
-                                                    reponse: false,
+                                                    reponse: false, nb_assure_desire: nb_assure_rempli,
                                                   )));
                                     },
                                     child: const Text(
@@ -119,9 +119,7 @@ class CustomCard extends StatelessWidget {
                                       Navigator.of(context)
                                           .pushReplacement(MaterialPageRoute(
                                               builder: (context) => Assure(
-                                                    color: color,
-                                                    type: titleCard,
-                                                    reponse: true,
+                                                    reponse: true, nb_assure_desire: nb_assure_rempli,
                                                   )));
                                     },
                                     child: const Text(

@@ -35,3 +35,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+class DegatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Degat
+        fields='__all__'

@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:front_end1/serializer/constat.dart';
 
 class Accident {
-  Constat constat;
+  int constat;
   String lieu_accident;
-  DateTime date_accident;
+  String date_accident;
   Accident({
     required this.constat,
     required this.lieu_accident,
@@ -14,9 +14,9 @@ class Accident {
   });
 
   Accident copyWith({
-    Constat? constat,
+    int? constat,
     String? lieu_accident,
-    DateTime? date_accident,
+    String? date_accident,
   }) {
     return Accident(
       constat: constat ?? this.constat,
@@ -27,22 +27,20 @@ class Accident {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'constat': constat.toMap(),
+      'constat': constat,
       'lieu_accident': lieu_accident,
-      'date_accident': date_accident.millisecondsSinceEpoch,
+      'date_accident': date_accident,
     };
   }
 
   factory Accident.fromMap(Map<String, dynamic> map) {
     return Accident(
-      constat: Constat.fromMap(map['constat'] as Map<String,dynamic>),
+      constat: map['constat'] as int,
       lieu_accident: map['lieu_accident'] as String,
-      date_accident: DateTime.fromMillisecondsSinceEpoch(map['date_accident'] as int),
+      date_accident: map['date_accident'] as String,
     );
   }
-
   String toJson() => json.encode(toMap());
-
   factory Accident.fromJson(String source) => Accident.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override

@@ -1,11 +1,14 @@
-import 'package:front_end1/constat/Screens/Dommage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:front_end1/constat/Screens/assurance.dart';
+import 'package:front_end1/constat/Screens/assurance2.dart';
+import 'package:http/http.dart' as http;
 
 class StepThree extends StatefulWidget {
-  final Color color;
-  final String type;
-  const StepThree({super.key, required this.color, required this.type});
+  http.Client client;
+  bool nb_assure_desire;
+   StepThree({super.key,required this.client,required this.nb_assure_desire});
 
   @override
   State<StepThree> createState() => _StepThreeState();
@@ -13,7 +16,6 @@ class StepThree extends StatefulWidget {
 
 class _StepThreeState extends State<StepThree> {
   bool chocExiste = false;
-
   List<bool> selectedSpots = List.generate(11, (index) => false);
 
   void toggleSpot(int index) {
@@ -30,7 +32,7 @@ class _StepThreeState extends State<StepThree> {
         title: const Text(
           "Etape 3",
           style: TextStyle(
-              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
       body: ListView(
@@ -60,7 +62,7 @@ class _StepThreeState extends State<StepThree> {
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
                 decoration: BoxDecoration(
-                    color: widget.color,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(40)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,7 +75,7 @@ class _StepThreeState extends State<StepThree> {
                           color: Colors.white),
                     ),
                     Text(
-                      widget.type,
+                      "aaaa",
                       style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -84,7 +86,6 @@ class _StepThreeState extends State<StepThree> {
                       child: const Icon(
                         Icons.directions_car_filled_sharp,
                         size: 30,
-                        color: Colors.white,
                       ),
                     )
                   ],
@@ -98,7 +99,7 @@ class _StepThreeState extends State<StepThree> {
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: widget.color),
+                    color: Colors.white),
               ),
               const PointChoc(),
               const SizedBox(
@@ -155,10 +156,15 @@ class _StepThreeState extends State<StepThree> {
                   ),
                   onPressed: () {
                     if (!chocExiste) {
-                      // showDialog(
-                      //     context: context,
-                      //     builder: (context) => Dommage(client: null,
-                      //         ));
+                      if(widget.nb_assure_desire)
+                  {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => assurance2()));
+                  }
+                  else{
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => assurance()));
+                  }
                     }
                   },
                   child: const Text("Suivant")),

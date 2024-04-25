@@ -42,19 +42,19 @@ class _StepOneTwoUserState extends State<StepOneTwoUser> {
           SizedBox(
             height: 30,
           ),
-          CustomCard(
-            titleCard: "A",
-            color: const Color(0xff125d84),
-            btn1: "Renseigner\n les informations du conducteur A",
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomCard(
-            titleCard: "B",
-            color: const Color(0xfff6b042),
-            btn1: "Renseigner\n les informations du conducteur B",
-          ),
+          // CustomCard(
+          //   titleCard: "A",
+          //   color: const Color(0xff125d84),
+          //   btn1: "Renseigner\n les informations du conducteur A",
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // CustomCard(
+          //   titleCard: "B",
+          //   color: const Color(0xfff6b042),
+          //   btn1: "Renseigner\n les informations du conducteur B",
+          // ),
           const SizedBox(
             height: 20,
           ),

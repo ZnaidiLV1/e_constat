@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:front_end1/serializer/assure.dart';
 
 class Conducteur {
-  assure assures;
+  int assures;
   int numr_tlfn;
   String first_name;
   String last_name;
@@ -18,14 +18,14 @@ class Conducteur {
   });
 
   Conducteur copyWith({
-    assure? assure,
+    int? assures,
     int? numr_tlfn,
     String? first_name,
     String? last_name,
     int? num_permis,
   }) {
     return Conducteur(
-      assures: assure ?? this.assures,
+      assures: assures ?? this.assures,
       numr_tlfn: numr_tlfn ?? this.numr_tlfn,
       first_name: first_name ?? this.first_name,
       last_name: last_name ?? this.last_name,
@@ -35,7 +35,7 @@ class Conducteur {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'assure': assures.toMap(),
+      'assures': assures,
       'numr_tlfn': numr_tlfn,
       'first_name': first_name,
       'last_name': last_name,
@@ -45,7 +45,7 @@ class Conducteur {
 
   factory Conducteur.fromMap(Map<String, dynamic> map) {
     return Conducteur(
-      assures: assure.fromMap(map['assure'] as Map<String,dynamic>),
+      assures: map['assures'] as int,
       numr_tlfn: map['numr_tlfn'] as int,
       first_name: map['first_name'] as String,
       last_name: map['last_name'] as String,
@@ -59,7 +59,7 @@ class Conducteur {
 
   @override
   String toString() {
-    return 'Conducteur(assure: $assure, numr_tlfn: $numr_tlfn, first_name: $first_name, last_name: $last_name, num_permis: $num_permis)';
+    return 'Conducteur(assures: $assures, numr_tlfn: $numr_tlfn, first_name: $first_name, last_name: $last_name, num_permis: $num_permis)';
   }
 
   @override

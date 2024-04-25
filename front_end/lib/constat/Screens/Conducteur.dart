@@ -1,20 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:front_end1/constat/Screens/Accident.dart';
 import 'package:front_end1/constat/Screens/form_field.dart';
 import 'package:front_end1/vehicule_type.dart';
 import 'package:http/http.dart' as http;
 
-
-class Conducteur extends StatefulWidget {
+class conducteur extends StatefulWidget {
   http.Client client;
   String constat_id;
-  Conducteur({super.key, required this.constat_id, required this.client});
+  bool nb_assure_desire;
+  conducteur({super.key, required this.constat_id, required this.client,required this.nb_assure_desire});
 
   @override
-  State<Conducteur> createState() => _ConducteurState();
+  State<conducteur> createState() => _conducteurState();
 }
 
-class _ConducteurState extends State<Conducteur> {
+class _conducteurState extends State<conducteur> {
   http.Client client = http.Client();
   final GlobalKey<FormState> formKey = GlobalKey();
   String nom_field = "";
@@ -72,6 +72,7 @@ class _ConducteurState extends State<Conducteur> {
                 child: Column(
                   children: [
                     form_field(
+                      obscure: false,
                       text: "Nom",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -80,6 +81,7 @@ class _ConducteurState extends State<Conducteur> {
                       keyboard_type: TextInputType.text,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Prenom",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -88,6 +90,7 @@ class _ConducteurState extends State<Conducteur> {
                       keyboard_type: TextInputType.text,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Numero Permis",
                       icon: Icons.car_repair,
                       on_changed: (value) {
@@ -96,6 +99,7 @@ class _ConducteurState extends State<Conducteur> {
                       keyboard_type: TextInputType.emailAddress,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Numero Telephone",
                       icon: Icons.format_list_numbered_outlined,
                       on_changed: (value) {
@@ -144,9 +148,9 @@ class _ConducteurState extends State<Conducteur> {
                         //   'num_permis': email_field,
                         // });
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => type(
+                            builder: (context) => accident(
                                   client: client,
-                                  constat_id: widget.constat_id,
+                                  constat_id: widget.constat_id, nb_assure_desire: widget.nb_assure_desire,
                                 )));
                       },
                       child: Text(

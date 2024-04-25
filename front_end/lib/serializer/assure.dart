@@ -7,14 +7,12 @@ class assure {
   String last_name;
   String email_user;
   int num_permis;
-  int numr_tlfn_autre_assure;
   assure({
     required this.numr_tlfn,
     required this.first_name,
     required this.last_name,
     required this.email_user,
     required this.num_permis,
-    required this.numr_tlfn_autre_assure,
   });
 
   assure copyWith({
@@ -31,7 +29,6 @@ class assure {
       last_name: last_name ?? this.last_name,
       email_user: email_user ?? this.email_user,
       num_permis: num_permis ?? this.num_permis,
-      numr_tlfn_autre_assure: numr_tlfn_autre_assure ?? this.numr_tlfn_autre_assure,
     );
   }
 
@@ -42,7 +39,6 @@ class assure {
       'last_name': last_name,
       'email_user': email_user,
       'num_permis': num_permis,
-      'numr_tlfn_autre_assure': numr_tlfn_autre_assure,
     };
   }
 
@@ -53,17 +49,25 @@ class assure {
       last_name: map['last_name'] as String,
       email_user: map['email_user'] as String,
       num_permis: map['num_permis'] as int,
-      numr_tlfn_autre_assure: map['numr_tlfn_autre_assure'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory assure.fromJson(String source) => assure.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory assure.fromJson2(Map<String, dynamic> json) {
+  return assure(
+    numr_tlfn: json['numr_tlfn'] ?? 0,
+    first_name: json['first_name'] ?? '',
+    last_name: json['last_name'] ?? '',
+    email_user: json['email_user'] ?? '',
+    num_permis: json['num_permis'] ?? 0,
+  );
+}
 
   @override
   String toString() {
-    return 'assure(numr_tlfn: $numr_tlfn, first_name: $first_name, last_name: $last_name, email_user: $email_user, num_permis: $num_permis, numr_tlfn_autre_assure: $numr_tlfn_autre_assure)';
+    return 'assure(numr_tlfn: $numr_tlfn, first_name: $first_name, last_name: $last_name, email_user: $email_user, num_permis: $num_permis';
   }
 
   @override
@@ -75,8 +79,7 @@ class assure {
       other.first_name == first_name &&
       other.last_name == last_name &&
       other.email_user == email_user &&
-      other.num_permis == num_permis &&
-      other.numr_tlfn_autre_assure == numr_tlfn_autre_assure;
+      other.num_permis == num_permis ;
   }
 
   @override
@@ -85,7 +88,6 @@ class assure {
       first_name.hashCode ^
       last_name.hashCode ^
       email_user.hashCode ^
-      num_permis.hashCode ^
-      numr_tlfn_autre_assure.hashCode;
+      num_permis.hashCode ;
   }
 }

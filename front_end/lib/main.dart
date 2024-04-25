@@ -4,13 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:front_end1/first_page.dart';
 
 // Import other screens based on your navigation needs
-import 'package:front_end1/connexion/Accueil.dart';
-import 'package:front_end1/connexion/Connexion.dart';
-import 'package:front_end1/connexion/signup.dart';
-import 'package:front_end1/constat/OneUser/StepOne.dart';
-import 'package:front_end1/constat/OneUser/StepTwo.dart';
-import 'package:front_end1/constat/TwoUser/StepOneTwoUser.dart';
-import 'package:front_end1/constat/TwoUser/StepTwo2User.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -29,13 +23,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
 
       routes: {
-        "/": (context) => const first_page(), 
-        "connexion": (context) => const Connexion(),
-        "profil": (context) => const signup(),
-        "stepOne2": (context) => const StepOneTwoUser(),
-        "stepTwo2": (context) => const StepTwo2User(),
-        "stepOne1": (context) => const StepOne(),
-        "stepTwo1": (context) => const StepTwo(),
+        "/": (context) => const first_page(),
       },
     );
   }

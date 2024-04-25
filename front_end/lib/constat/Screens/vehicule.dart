@@ -10,13 +10,15 @@ import '../../serializer/assure.dart';
 
 class Vehicule extends StatefulWidget {
   String type_vehicule;
+  bool nb_assure_desire;
   http.Client client;
   String consta_id;
   Vehicule(
       {super.key,
       required this.client,
       required this.consta_id,
-      required this.type_vehicule});
+      required this.type_vehicule,
+      required this.nb_assure_desire});
 
   @override
   State<Vehicule> createState() => _VehiculeState();
@@ -79,6 +81,7 @@ class _VehiculeState extends State<Vehicule> {
                 child: Column(
                   children: [
                     form_field(
+                      obscure: false,
                       text: "Carte Grise",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -87,6 +90,7 @@ class _VehiculeState extends State<Vehicule> {
                       keyboard_type: TextInputType.text,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Immatriculation",
                       icon: Icons.person_2_sharp,
                       on_changed: (value) {
@@ -95,6 +99,7 @@ class _VehiculeState extends State<Vehicule> {
                       keyboard_type: TextInputType.number,
                     ),
                     form_field(
+                      obscure: false,
                       text: "Marque",
                       icon: Icons.car_repair,
                       on_changed: (value) {
@@ -146,7 +151,7 @@ class _VehiculeState extends State<Vehicule> {
                         // if (widget.reponse) {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => Dommage(
-                                  client: client,
+                                  client: client, nb_assure_desire: widget.nb_assure_desire,
                                 )));
                         // } else {
                         //   Navigator.of(context).pushReplacement(

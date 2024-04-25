@@ -4,13 +4,17 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:front_end1/constat/Screens/CustomCard.dart';
+import 'package:front_end1/constat/Screens/assurance.dart';
+import 'package:front_end1/constat/Screens/assurance2.dart';
 import 'package:front_end1/constat/Screens/form_field.dart';
+import 'package:front_end1/constat/stepTree/stepThree.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class Dommage extends StatefulWidget {
   http.Client client;
-  Dommage({super.key, required this.client});
+  bool nb_assure_desire;
+  Dommage({super.key, required this.client,required this.nb_assure_desire});
 
   @override
   State<Dommage> createState() => _DommageState();
@@ -184,6 +188,7 @@ class _DommageState extends State<Dommage> {
           //   ),
           // ),
           form_field(
+            obscure: false,
               text: "Description des degats",
               icon: Icons.description,
               on_changed: (value) {
@@ -210,7 +215,10 @@ class _DommageState extends State<Dommage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => StepThree(client: widget.client, nb_assure_desire: widget.nb_assure_desire,)));
+                },
               )
             ],
           )

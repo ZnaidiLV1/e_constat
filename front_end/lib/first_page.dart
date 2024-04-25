@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:front_end1/connexion/login.dart';
-import 'package:front_end1/connexion/signup.dart';
+import 'package:front_end1/User_Login/signup.dart';
 import 'package:front_end1/constat/OneUser/StepOne.dart';
 import 'package:lottie/lottie.dart';
 
@@ -139,13 +139,17 @@ class BottomSheetContent extends StatelessWidget {
                 ),
                 onPressed: () {
                   showDialog(
-                      context: context, builder: ((context) => StepOne()));
+                      context: context, builder: ((context) => StepOne(nb_assure_desire: false,)));
                 },
               ),
               const SizedBox(height: 15),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "stepOne2");
+                  Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StepOne(nb_assure_desire: true,),
+                        ),
+                      );
                 },
                 child: Text(
                   '2 CONDUCTEURS SUR 2 TELEPHONES',

@@ -7,7 +7,9 @@ import 'package:card_swiper/card_swiper.dart';
 class type extends StatefulWidget {
   http.Client client;
   String constat_id;
-  type({super.key, required this.client, required this.constat_id});
+  bool nb_assure_desire;
+  type({super.key, required this.client, required this.constat_id
+  ,required this.nb_assure_desire});
 
   @override
   State<type> createState() => _typeState();
@@ -58,7 +60,7 @@ class _typeState extends State<type> {
                       builder: (context) => Vehicule(
                             client: widget.client,
                             type_vehicule: type_list[index],
-                            consta_id: widget.constat_id,
+                            consta_id: widget.constat_id, nb_assure_desire: widget.nb_assure_desire,
                           )));
                 },
                 child: Container(

@@ -1,7 +1,9 @@
+import os
+
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from . import serializers
 from . import models
 from .serializers import UserCreateSerializer
@@ -34,14 +36,12 @@ def create_assure(request):
     data = request.data
     n_tlfn = int(data['numr_tlfn'])
     n_permis = int(data['num_permis'])
-    n_tlfn2=int(data['numr_tlfn_autre_assure'])
     assure = models.Assure.objects.create(
         first_name=data['first_name'],
         last_name=data['last_name'],
         email_user=data['email_user'],
         numr_tlfn=n_tlfn,
         num_permis=n_permis,
-        numr_tlfn_autre_assure=n_tlfn2
     )
     serializer = serializers.assureSerializer(assure, many=False)
 
@@ -55,7 +55,17 @@ def get_assure(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_assure_x(request, email_assure):
+    assure = models.Assure.objects.filter(email_user=email_assure)
+    serializer = serializers.assureSerializer(assure, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+def get_assure_wanted(request, numr_tlfn):
+    assure = models.Assure.objects.filter(numr_tlfn=numr_tlfn)
+    serializer = serializers.assureSerializer(assure, many=True)
+    return Response(serializer.data)
 @api_view(['POST'])
 def create_conductor(request, id_assure):
     data = request.data
@@ -85,17 +95,22 @@ def get_conducteur(request, id_assure):
 
 @api_view(['POST'])
 def create_constat(request, id_assure):
+    data = request.data
+    num_t = int(data["numr_tlfn_autre_assure"])
     constat = models.Constat.objects.create(
-        assure=id_assure
+        assure=id_assure,
+        numr_tlfn_autre_assure=num_t
     )
     serializer = serializers.constatSerializer(constat, many=False)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
-def get_constat(request,id_con):
-    constat=models.Constat.objects.get(id_constat=id_con)
-    serializer=serializers.constatSerializer(constat,many=False)
+def get_constat_u_want(request, id_con):
+    constat = models.Constat.objects.get(assure=id_con)
+    serializer = serializers.constatSerializer(constat, many=False)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def get_constats(request, id_assure):
@@ -112,12 +127,13 @@ def create_voiture(request, id_constat):
     voiture = models.Voiture.objects.create(
         constat=constat,
         type=data["type"],
-        marque=data["type"],
+        marque=data["marque"],
         immatriculation=imm,
         carte_grise=data["carte_grise"],
     )
     serializer = serializers.voitureSerializer(voiture, many=False)
     return Response(serializer.data)
+
 
 @api_view(["POST"])
 def create_accident(request, id_constat):
@@ -131,6 +147,14 @@ def create_accident(request, id_constat):
     serializer = serializers.accidentSerilizer(accident, many=False)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def get_accident_ya_zah(request, id_constat):
+    constat=get_object_or_404(models.Constat,id_constat=id_constat)
+    accident=models.Accident.objects.get(constat=constat)
+    serializer=serializers.accidentSerilizer(accident,many=False)
+    return Response(serializer.data)
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -142,8 +166,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
 
 @api_view(['POST'])
 def logout(request):
@@ -155,6 +181,7 @@ def logout(request):
     except Exception as e:
         return Response({"error": str(e)})
 
+
 @api_view(['POST'])
 def create_user(request):
     if request.method == 'POST':
@@ -164,17 +191,36 @@ def create_user(request):
             return Response("user crreated successufully")
         return Response(serializer.errors, status=400)
 
+
 @api_view(['GET'])
 def get_voiture(request, id_constat):
-    constat=get_object_or_404(models.Constat,id_constat=id_constat)
-    voiture=models.Voiture.objects.filter(constat=constat)
-    serializer=serializers.voitureSerializer(voiture,many=True)
+    constat = get_object_or_404(models.Constat, id_constat=id_constat)
+    voiture = get_object_or_404(models.Voiture, constat=constat)
+    serializer = serializers.voitureSerializer(voiture,many=False)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def get_accident(request, id_constat):
-    constat=get_object_or_404(models.Constat,id_constat=id_constat)
-    accident=models.Voiture.objects.filter(constat=constat)
-    serializer=serializers.accidentSerilizer(accident,many=True)
+    constat = get_object_or_404(models.Constat, id_constat=id_constat)
+    accident = models.Voiture.objects.filter(constat=constat)
+    serializer = serializers.accidentSerilizer(accident, many=True)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_degat(request, id_accident):
+    data = request.data
+    accident = models.Accident.objects.get(pk=id_accident)
+    degat = models.Degat.objects.create(
+        accident=accident,
+        photo=data["photo"],
+        description=data["description"],
+        peinture=data["peinture"]
+    )
+    photo_path = os.path.join(settings.MEDIA_ROOT, degat.photo.name)
+    print(f"Photo saved to: {photo_path}")
+    serializer = serializers.DegatSerializer(degat, many=False)
+    return Response("degat created successefully")
+
 # Create your views here.
