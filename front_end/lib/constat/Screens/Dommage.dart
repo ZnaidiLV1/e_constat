@@ -7,7 +7,11 @@ import 'package:front_end1/constat/Screens/CustomCard.dart';
 import 'package:front_end1/constat/Screens/assurance.dart';
 import 'package:front_end1/constat/Screens/assurance2.dart';
 import 'package:front_end1/constat/Screens/form_field.dart';
+<<<<<<< HEAD
 import 'package:front_end1/constat/stepTree/stepThree.dart';
+=======
+
+>>>>>>> 6b8acfffd692870a65ffb0ab44a37f36229f1fe5
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -168,25 +172,6 @@ class _DommageState extends State<Dommage> {
                       )
                     ])),
           ),
-          // Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          //   alignment: Alignment.topLeft,
-          //   child: TextField(
-          //     controller: _descriptionController,
-          //     minLines: 1,
-          //     maxLines: 4,
-          //     decoration: const InputDecoration(
-          //       border: OutlineInputBorder(
-          //           borderRadius: BorderRadius.all(Radius.circular(20))),
-          //       labelText: "Description des dégats ",
-          //       labelStyle: TextStyle(
-          //           fontSize: 14,
-          //           fontWeight: FontWeight.w300,
-          //           color: Colors.grey),
-          //     ),
-          //     textInputAction: TextInputAction.done,
-          //   ),
-          // ),
           form_field(
             obscure: false,
               text: "Description des degats",
@@ -202,6 +187,25 @@ class _DommageState extends State<Dommage> {
             children: [
               ElevatedButton(
                 child: Text(
+                  'Annuler',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFFD2A347),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ElevatedButton(
+                child: Text(
                   'Suivant',
                   style: TextStyle(
                     fontSize: 20,
@@ -210,7 +214,7 @@ class _DommageState extends State<Dommage> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFD2A347),
+                  backgroundColor: Color(0xFFD2A347),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

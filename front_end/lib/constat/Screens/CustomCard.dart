@@ -42,7 +42,7 @@ class CustomCard extends StatelessWidget {
                           color: color),
                     ),
                     const SizedBox(
-                      width: 5,
+                      width: 10,
                     ),
                     Text(
                       titleCard,
@@ -88,7 +88,7 @@ class CustomCard extends StatelessWidget {
                                 children: [
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFF193A59),
+                                      backgroundColor: Color(0xFF193A59),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
@@ -110,7 +110,7 @@ class CustomCard extends StatelessWidget {
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: Color(0xFF193A59),
+                                      backgroundColor: Color(0xFF193A59),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(30),
                                       ),
@@ -145,7 +145,7 @@ class CustomCard extends StatelessWidget {
                       btn1,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),

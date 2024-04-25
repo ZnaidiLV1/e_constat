@@ -139,8 +139,13 @@ class _AssureState extends State<Assure> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
+<<<<<<< HEAD
                         primary: Color(0xFFD2A347),
                         onPrimary: Colors.black,
+=======
+                        foregroundColor: Colors.black,
+                        backgroundColor: Color(0xFFD2A347),
+>>>>>>> 6b8acfffd692870a65ffb0ab44a37f36229f1fe5
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -165,11 +170,17 @@ class _AssureState extends State<Assure> {
                         if (widget.reponse) {
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
+<<<<<<< HEAD
                                   builder: (context) => accident(
                                         client: client,
                                         constat_id: "4",
                                         nb_assure_desire:
                                             widget.nb_assure_desire,
+=======
+                                  builder: (context) => type(
+                                        client: client,
+                                        constat_id: "1",
+>>>>>>> 6b8acfffd692870a65ffb0ab44a37f36229f1fe5
                                       )));
                         } else {
                           // assure ass = assure(
@@ -183,11 +194,17 @@ class _AssureState extends State<Assure> {
                           // );
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
+<<<<<<< HEAD
                                   builder: (context) => conducteur(
                                         client: client,
                                         constat_id: '3',
                                         nb_assure_desire:
                                             widget.nb_assure_desire,
+=======
+                                  builder: (context) => Conducteur(
+                                        client: client,
+                                        constat_id: '1',
+>>>>>>> 6b8acfffd692870a65ffb0ab44a37f36229f1fe5
                                       )));
                         }
                       },
@@ -200,7 +217,7 @@ class _AssureState extends State<Assure> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),

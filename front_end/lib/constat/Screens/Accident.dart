@@ -100,6 +100,28 @@ class _accidentState extends State<accident> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+<<<<<<< HEAD
+=======
+                        Navigator.pop(context);
+                      },
+                      child: const Text(
+                        'Annuler',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black, backgroundColor: Color(0xFFD2A347),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+>>>>>>> 6b8acfffd692870a65ffb0ab44a37f36229f1fe5
                         // Uri create_consucteurURI = Uri.parse(
                         //     "http://10.0.2.2:8000/api/${widget.constat_id}/create_accident/");
                         // client.post(create_consucteurURI, body: {
@@ -123,7 +145,7 @@ class _accidentState extends State<accident> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2A347),
+                        backgroundColor: Color(0xFFD2A347),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
